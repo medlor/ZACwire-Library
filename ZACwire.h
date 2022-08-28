@@ -17,7 +17,7 @@
 
 class ZACwire {
 	public:
-		explicit ZACwire(uint8_t inputPin, int16_t sensor=306);
+		explicit ZACwire(uint8_t inputPin, int16_t sensor=306, bool directMode=false);
 		
 		bool begin();					//start reading
 		

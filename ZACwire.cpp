@@ -6,6 +6,8 @@
 #include "ZACwire.h"
 #include "Arduino.h"
 
+#define ZACWIRE_VERSION 200L
+
 #if !defined(ESP32) && !defined(ESP8266)			//initialize static variables for AVR boards
 	uint8_t ZACwire::bitThreshold;
 	uint16_t ZACwire::measuredTimeDiff;
@@ -16,9 +18,10 @@
 #endif
 
 
-ZACwire::ZACwire(uint8_t pin, int16_t sensor) : _pin{pin}, _sensor{sensor} {
+ZACwire::ZACwire(uint8_t pin, int16_t sensor, bool directMode) : _pin{pin}, _sensor{sensor} {
 	bitCounter = 0;
 	bitThreshold = 0;
+	_directMode = directMode;
 }
 
 
@@ -62,6 +65,8 @@ float ZACwire::getTemp(uint8_t maxChangeRate, bool useBackup) {	//return tempera
 			if (_sensor < 400) return ((temp * 250L >> 8) - 499) / 10.0; //use different formula for 206&306 or 506
 			else return ((temp * 175L >> 9) - 99) / 10.0;
 		}
+	} else if (_directMode) {  //if tempCheck() failed, then always return errorMisreading
+		return errorMisreading;
 	}
 	return useBackup ? errorMisreading : getTemp(maxChangeRate,!useBackup); //restart with backUP rawData or return error value 222
 }
