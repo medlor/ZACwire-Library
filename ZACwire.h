@@ -8,6 +8,8 @@
 
 #include "Arduino.h"
 
+#define ZACWIRE_VERSION 200L
+
 #if defined(ESP32) || defined(ESP8266)
 	#define STATIC
 #else
