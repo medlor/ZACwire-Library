@@ -45,6 +45,7 @@ class ZACwire {
 
 		uint8_t _pin;
 		int16_t _sensor;
+		bool _directMode;
 		uint32_t timeLastHB{};				//timestamp, when ISR stopped sending heartbeats
 		int16_t prevTemp{};				//to calculate the change rate
 
