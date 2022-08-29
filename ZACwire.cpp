@@ -37,7 +37,7 @@ bool ZACwire::begin() {						//start collecting data, needs to be called over 2m
 	bitThreshold = strobeTime * 2.5;
 	
 	uint8_t isrPin = digitalPinToInterrupt(_pin);
-	if (isrPin == 255) return false;
+	if (isrPin == 255 || isrPin == -1) return false;
 	#if defined(ESP32) || defined(ESP8266)
 		attachInterruptArg(isrPin, isrHandler, this, RISING);
 	#else
